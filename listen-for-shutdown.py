@@ -9,8 +9,8 @@ from time import sleep
 button_gpio=3
 relay_gpio=4
 
-short_press=0.5
-long_press=10
+short_press=0.1
+long_press=5
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(button_gpio, GPIO.IN, pull_up_down=GPIO.PUD_UP)
@@ -33,6 +33,7 @@ def main():
       relay_state = not relay_state
       print('Changing relay state to: ' + str(relay_state))
       GPIO.output(relay_gpio, relay_state)
+      time.sleep(0.5)
 
 if __name__ == '__main__':
   main()
