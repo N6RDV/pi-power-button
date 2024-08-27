@@ -17,8 +17,7 @@ GPIO.setup(button_gpio, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(relay_gpio, GPIO.OUT)
 
 def main():
-  relay_state=True
-  GPIO.output(relay_gpio, relay_state)
+  relay_state=GPIO.input(relay_gpio)
   while True:
     GPIO.wait_for_edge(button_gpio, GPIO.FALLING)
     counter = 0
