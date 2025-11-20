@@ -7,17 +7,19 @@ import time
 from time import sleep
 
 button_gpio=3
-relay_gpio=4
+light_gpio=27
+fan_gpio=27
 
 short_press=0.1
-long_press=5
+long_press=10
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(button_gpio, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(relay_gpio, GPIO.OUT)
+GPIO.setup(light_gpio, GPIO.OUT)
+GPIO.setup(fan_gpio, GPIO.OUT)
 
 def main():
-  relay_state=GPIO.input(relay_gpio)
+  relay_state=GPIO.input(light_gpio) or GPIO.input(fan_gpio)
   while True:
     GPIO.wait_for_edge(button_gpio, GPIO.FALLING)
     counter = 0
@@ -31,7 +33,8 @@ def main():
     elif counter >= short_press:
       relay_state = not relay_state
       print('Changing relay state to: ' + str(relay_state))
-      GPIO.output(relay_gpio, relay_state)
+      GPIO.output(light_gpio, relay_state)
+      GPIO.output(fan_gpio, relay_state)
       time.sleep(0.5)
 
 if __name__ == '__main__':
