@@ -8,7 +8,7 @@ from time import sleep
 
 button_gpio=3
 light_gpio=27
-fan_gpio=27
+fan_gpio=22
 
 short_press=0.1
 long_press=10
