@@ -34,7 +34,7 @@ def main():
       print('Changing relay state to: ' + str(relay_state))
       GPIO.output(light_gpio, relay_state)
       GPIO.output(fan_gpio, relay_state)
-      time.sleep(0.5)
+      time.sleep(short_press)
 
 if __name__ == '__main__':
   main()
