@@ -19,7 +19,6 @@ GPIO.setup(light_gpio, GPIO.OUT)
 GPIO.setup(fan_gpio, GPIO.OUT)
 
 def main():
-  relay_state=GPIO.input(light_gpio) or GPIO.input(fan_gpio)
   while True:
     GPIO.wait_for_edge(button_gpio, GPIO.FALLING)
     counter = 0
@@ -27,6 +26,9 @@ def main():
       time.sleep(0.1)
       counter = round(counter + 0.1, 1)
       print('Shutdown button is pressed ' + str(counter))
+      
+    relay_state=GPIO.input(light_gpio) or GPIO.input(fan_gpio)
+    
     if counter >= long_press:
       print('Shutting down')
       subprocess.call(['shutdown', '-h', 'now'], shell=False)
