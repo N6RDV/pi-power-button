@@ -25,11 +25,16 @@ def main():
     while GPIO.input(button_gpio) == 0 and counter < long_press:
       time.sleep(0.1)
       counter = round(counter + 0.1, 1)
-      print('Shutdown button is pressed ' + str(counter))
-    if counter >= long_press:
-      print('Shutting down')
-      subprocess.call(['shutdown', '-h', 'now'], shell=False)
-    elif counter >= short_press:
+      
+      if counter >= long_press:
+        print('Shutting down')
+        subprocess.call(['shutdown', '-h', 'now'], shell=False)
+        return # Exit the script as the system is shutting down
+      
+      if int(counter * 10) % 10 == 0: # Print every second to keep logs clean
+        print(f'Button held for: {counter}s')
+      
+    if counter >= short_press and counter < long_press:
       relay_state = not (GPIO.input(light_gpio) or GPIO.input(fan_gpio))
       print('Changing relay state to: ' + str(relay_state))
       GPIO.output(light_gpio, relay_state)
